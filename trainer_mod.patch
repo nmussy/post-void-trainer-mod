@@ -1,0 +1,82 @@
+diff --git a/gml_Object_obj_level_end_timer_Alarm_0.gml b/gml_Object_obj_level_end_timer_Alarm_0.gml
+index 5e2c998..bd8698f 100644
+--- a/gml_Object_obj_level_end_timer_Alarm_0.gml
++++ b/gml_Object_obj_level_end_timer_Alarm_0.gml
+@@ -1,7 +1,7 @@
+ global.LEVEL_TIME = 0
+ if (global.LEVEL != 10)
+ {
+-    global.LEVEL += 1
++    global.LEVEL += 0
+     scr_destroy_3d_objects()
+     room_goto(room_transition)
+ }
+diff --git a/gml_Object_obj_menu_Create_0.gml b/gml_Object_obj_menu_Create_0.gml
+index b9ed9f8..0eaf048 100644
+--- a/gml_Object_obj_menu_Create_0.gml
++++ b/gml_Object_obj_menu_Create_0.gml
+@@ -19,7 +19,7 @@ else
+     dy = 270
+     sy = -1
+ }
+-title = "POST VOID"
++title = "TRAIN VOID"
+ global.FROM_GAME = 0
+ title_fonts = 3
+ title_font[0] = 0
+@@ -133,7 +133,7 @@ pv_scale_t = 0
+ pv_font[0] = 6
+ pv_font[1] = 7
+ pv_font[2] = 8
+-post_text = "POST"
++post_text = "TRAIN"
+ void_text = "VOID"
+ post_font_array = scr_random_font_setup(post_text, pv_font)
+ void_font_array = scr_random_font_setup(void_text, pv_font)
+diff --git a/gml_Object_obj_setup_Create_0.gml b/gml_Object_obj_setup_Create_0.gml
+index 5ade9e7..bc27b86 100644
+--- a/gml_Object_obj_setup_Create_0.gml
++++ b/gml_Object_obj_setup_Create_0.gml
+@@ -1,6 +1,6 @@
+-global.VERSION = "1.0.3b"
++global.VERSION = "1.0.3b TRAINER"
+ global.HS_VERSION = "1"
+-global.DEBUG_MODE = 0
++global.DEBUG_MODE = 1
+ global.TOGGLE_DEBUG = 0
+ global.ACC_MODE = 0
+ global.SHOOT_EFFECT_FACTOR = 1
+diff --git a/gml_Object_obj_stats_screen_Step_0.gml b/gml_Object_obj_stats_screen_Step_0.gml
+index a6d3bbc..3d0fef8 100644
+--- a/gml_Object_obj_stats_screen_Step_0.gml
++++ b/gml_Object_obj_stats_screen_Step_0.gml
+@@ -7,7 +7,7 @@ if keyboard_check_pressed(vk_space)
+     }
+     else if (mode == "overview")
+     {
+-        global.LEVEL += 1
++        global.LEVEL += 0
+         scr_reset_stats()
+         room_goto(room_game)
+     }
+diff --git a/gml_Script_scr_reset_upgrades.gml b/gml_Script_scr_reset_upgrades.gml
+index 1738f97..02d2479 100644
+--- a/gml_Script_scr_reset_upgrades.gml
++++ b/gml_Script_scr_reset_upgrades.gml
+@@ -1,2 +1,3 @@
+-global.LAST_UPGRADE = "none"
++global.LAST_UPGRADE = "knife"
+ obj_upgrade_list.player_upgrades = 0
++scr_upgrade_get(8)
+\ No newline at end of file
+diff --git a/gml_Script_scr_setup_stats.gml b/gml_Script_scr_setup_stats.gml
+index 2f7ee02..b7fdcab 100644
+--- a/gml_Script_scr_setup_stats.gml
++++ b/gml_Script_scr_setup_stats.gml
+@@ -1,5 +1,5 @@
+ scr_reset_level_time()
+-global.LEVEL = 0
++global.LEVEL = 9
+ global.CORRIDORS_ONLY = 0
+ global.TIME = 0
+ global.LEVEL_TIME = 0
