@@ -20,12 +20,12 @@
 
 ## Installation
 
-### Requirements
+### Pre-requirements
 
 * [UndertaleModTool](https://github.com/krzys-h/UndertaleModTool/releases)
 * [git](http://git-scm.com/download/win) to apply the mod's diffs
 
-## Usage
+### Manual install
 
 * Go to `C:\Program Files (x86)\Steam\steamapps\common\Post Void\`
 * [Download the tarball of this repository](https://github.com/nmussy/post-void-trainer-mod/archive/master.zip), and export it in the Post Void folder
