@@ -22,7 +22,7 @@
 ## Usage
 
 * Go to `C:\Program Files (x86)\Steam\steamapps\common\Post Void\`
-* [Download the tarball of this repository](/archive/master.zip), and export it in the Post Void folder
+* [Download the tarball of this repository](https://github.com/nmussy/post-void-trainer-mod/archive/master.zip), and export it in the Post Void folder
 * Open `data.win` with UndertaleModtool
 * `Scripts > Run bultin script > ExportAllCode.csx`
 * Run `create_trainer_mod_files.bat`
