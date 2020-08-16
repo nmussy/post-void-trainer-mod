@@ -1,5 +1,7 @@
 # Post Void trainer mod
 
+![preview](https://cdn.discordapp.com/attachments/741329513031663649/744673245889822820/unknown.png)
+
 ## Features
 
 * Adds a "Trainer" menu in the settings
