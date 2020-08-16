@@ -1,13 +1,14 @@
 diff --git a/gml_Object_obj_level_end_timer_Alarm_0.gml b/gml_Object_obj_level_end_timer_Alarm_0.gml
-index 5e2c998..bd8698f 100644
+index 5e2c998..6c91e6c 100644
 --- a/gml_Object_obj_level_end_timer_Alarm_0.gml
 +++ b/gml_Object_obj_level_end_timer_Alarm_0.gml
-@@ -1,7 +1,7 @@
+@@ -1,7 +1,8 @@
  global.LEVEL_TIME = 0
  if (global.LEVEL != 10)
  {
 -    global.LEVEL += 1
-+    global.LEVEL += 0
++    if (global.LOOP_LEVEL != 1)
++        global.LEVEL += 1
      scr_destroy_3d_objects()
      room_goto(room_transition)
  }
@@ -33,6 +34,141 @@ index b9ed9f8..0eaf048 100644
  void_text = "VOID"
  post_font_array = scr_random_font_setup(post_text, pv_font)
  void_font_array = scr_random_font_setup(void_text, pv_font)
+diff --git a/gml_Object_obj_options_Step_0.gml b/gml_Object_obj_options_Step_0.gml
+index ef39583..7d9c2dd 100644
+--- a/gml_Object_obj_options_Step_0.gml
++++ b/gml_Object_obj_options_Step_0.gml
+@@ -77,7 +77,7 @@ if (slider_holding != -1)
+                 global.MOUSE_SENSE_V = max(global.MOUSE_SENSE_MIN, (slider_val[slider_holding] * global.MOUSE_SENSE_MAX))
+                 break
+         }
+-        
++
+     }
+     else
+     {
+@@ -85,7 +85,7 @@ if (slider_holding != -1)
+         slider_holding = -1
+     }
+ }
+-if (mouse_check_button_pressed(1) && ((option_selected != -1) && (setting_key == -1)))
++if ((mouse_check_button_pressed(1) || mouse_check_button_pressed(2)) && ((option_selected != -1) && (setting_key == -1)))
+ {
+     if (option_type[option_selected] == "key")
+         setting_key = option_selected
+@@ -177,8 +177,102 @@ if (mouse_check_button_pressed(1) && ((option_selected != -1) && (setting_key ==
+             else
+                 option_text[option_selected] = "Accessibility Mode (ON)"
+             break
++        case "start_level":
++            scr_play_sound_player(snd_menu_click, 1, false)
++            global.START_LEVEL += mouse_check_button_pressed(1) ? 1 : -1
++            // Tutorial is broken
++            /* if (global.START_LEVEL == 10 || global.START_LEVEL < 0)
++                global.START_LEVEL = 99
++            else if (global.START_LEVEL >= 100)
++                global.START_LEVEL = 0
++            else if (global.START_LEVEL > 10 && global.START_LEVEL < 100)
++                global.START_LEVEL = 9*/
++
++            if (global.START_LEVEL < 0)
++                global.START_LEVEL = 10
++            else if (global.START_LEVEL > 10)
++                global.START_LEVEL = 0
++
++            global.LEVEL = global.START_LEVEL
++            option_text[option_selected] = "Start on level: "
++
++            if(global.START_LEVEL == 10)
++                option_text[option_selected] += "Epilogue"
++            else if(global.START_LEVEL == 99)
++                option_text[option_selected] += "Tutorial"
++            else
++                option_text[option_selected] += string(global.START_LEVEL + 1)
++
++            break
++        case "loop_level":
++            scr_play_sound_player(snd_menu_click, 1, false)
++            global.LOOP_LEVEL = global.LOOP_LEVEL ? 0 : 1
++            if (global.LOOP_LEVEL)
++                option_text[option_selected] = "Loop level (ON)"
++            else
++                option_text[option_selected] = "Loop level (OFF)"
++            break
++        case "force_upgrade":
++            scr_play_sound_player(snd_menu_click, 1, false)
++            global.FORCE_UPGRADE += mouse_check_button_pressed(1) ? 1 : -1
++            if (global.FORCE_UPGRADE >= 12)
++                global.FORCE_UPGRADE = -1
++            else if (global.FORCE_UPGRADE < -1)
++                global.FORCE_UPGRADE = 11
++            option_text[option_selected] = "Force upgrade: "
++            switch global.FORCE_UPGRADE
++            {
++                case -1:
++                    option_text[option_selected] += "OFF"
++                    break
++                case 0:
++                    option_text[option_selected] += "Serious Mode"
++                    break
++                case 1:
++                    option_text[option_selected] += "Slow bullets"
++                    break
++                case 2:
++                    option_text[option_selected] += "SHOTGUN"
++                    break
++                case 3:
++                    option_text[option_selected] += "Big idol"
++                    break
++                case 4:
++                    option_text[option_selected] += "UZI"
++                    break
++                case 5:
++                    option_text[option_selected] += "RUBBER BULLETS"
++                    break
++                case 6:
++                    option_text[option_selected] += "BIGGER clips"
++                    break
++                case 7:
++                    option_text[option_selected] += "Explosive ammo"
++                    break
++                case 8:
++                    option_text[option_selected] += "knife"
++                    break
++                case 9:
++                    option_text[option_selected] += "Reload Speed"
++                    break
++                case 10:
++                    option_text[option_selected] += "Ghost"
++                    break
++                case 11:
++                    option_text[option_selected] += "Compass"
++                    break
++            }
++            break
++        case "start_with_upgrade":
++            scr_play_sound_player(snd_menu_click, 1, false)
++            global.START_WITH_UPGRADE = global.START_WITH_UPGRADE ? 0 : 1
++            if (global.START_WITH_UPGRADE)
++                option_text[option_selected] = "Start with upgrade (ON)"
++            else
++                option_text[option_selected] = "Start with upgrade (OFF)"
++            break
+     }
+-    
++
+     if (option_type[option_selected] == "menu")
+     {
+         submenu = option[option_selected]
+@@ -217,7 +311,7 @@ if (setting_key != -1)
+                 global.KEY_SUICIDE = keyboard_lastkey
+                 break
+         }
+-        
++
+         setting_key = -1
+     }
+ }
 diff --git a/gml_Object_obj_setup_Create_0.gml b/gml_Object_obj_setup_Create_0.gml
 index 5ade9e7..bc27b86 100644
 --- a/gml_Object_obj_setup_Create_0.gml
@@ -47,36 +183,231 @@ index 5ade9e7..bc27b86 100644
  global.ACC_MODE = 0
  global.SHOOT_EFFECT_FACTOR = 1
 diff --git a/gml_Object_obj_stats_screen_Step_0.gml b/gml_Object_obj_stats_screen_Step_0.gml
-index a6d3bbc..3d0fef8 100644
+index a6d3bbc..3db41ef 100644
 --- a/gml_Object_obj_stats_screen_Step_0.gml
 +++ b/gml_Object_obj_stats_screen_Step_0.gml
-@@ -7,7 +7,7 @@ if keyboard_check_pressed(vk_space)
+@@ -7,7 +7,8 @@ if keyboard_check_pressed(vk_space)
      }
      else if (mode == "overview")
      {
 -        global.LEVEL += 1
-+        global.LEVEL += 0
++        if (global.LOOP_LEVEL != 1)
++            global.LEVEL += 1
          scr_reset_stats()
          room_goto(room_game)
      }
+diff --git a/gml_Script_scr_generate_upgrades.gml b/gml_Script_scr_generate_upgrades.gml
+index f92cc12..0a8c47d 100644
+--- a/gml_Script_scr_generate_upgrades.gml
++++ b/gml_Script_scr_generate_upgrades.gml
+@@ -4,7 +4,11 @@ if (_amount > 0)
+ {
+     for (var _i = 0; _i < _amount; _i += 1)
+     {
+-        upgrade[_i] = irandom((obj_upgrade_list.upgrades - 1))
++        if (global.FORCE_UPGRADE >= 0 && !global.START_WITH_UPGRADE)
++            upgrade[_i] = global.FORCE_UPGRADE
++        else
++            upgrade[_i] = irandom((obj_upgrade_list.upgrades - 1))
++
+         while scr_upgrade_got(upgrade[_i])
+             upgrade[_i] = irandom((obj_upgrade_list.upgrades - 1))
+         if (_i > 0)
+diff --git a/gml_Script_scr_load_settings.gml b/gml_Script_scr_load_settings.gml
+index 855cd1c..79cf5ff 100644
+--- a/gml_Script_scr_load_settings.gml
++++ b/gml_Script_scr_load_settings.gml
+@@ -10,6 +10,10 @@ global.GRAIN_ENABLED = ini_read_real("video", "grain", 1)
+ global.SHOW_TIME = ini_read_real("gameplay", "show_time", 0)
+ global.VSYNC = ini_read_real("video", "vsync", 1)
+ global.ACC_MODE = ini_read_real("video", "acc", 0)
++global.START_LEVEL = 0
++global.LOOP_LEVEL = 0
++global.FORCE_UPGRADE = -1
++global.START_WITH_UPGRADE = 0
+ scr_set_acc_mode()
+ global.KEY_UP = ini_read_real("keys", "up", 87)
+ global.KEY_DOWN = ini_read_real("keys", "down", 83)
+diff --git a/gml_Script_scr_options_submenu.gml b/gml_Script_scr_options_submenu.gml
+index 28a7774..287a237 100644
+--- a/gml_Script_scr_options_submenu.gml
++++ b/gml_Script_scr_options_submenu.gml
+@@ -3,7 +3,7 @@ switch argument0
+     case "main":
+         if global.FROM_GAME
+         {
+-            options = 5
++            options = 6
+             option[0] = "back"
+             option_text[0] = "Resume"
+             option_type[0] = "click"
+@@ -16,13 +16,16 @@ switch argument0
+             option[3] = "gameplay"
+             option_text[3] = "Gameplay"
+             option_type[3] = "menu"
+-            option[4] = "exit"
+-            option_text[4] = "Exit"
+-            option_type[4] = "click"
++            option[4] = "trainer"
++            option_text[4] = "Trainer"
++            option_type[4] = "menu"
++            option[5] = "exit"
++            option_text[5] = "Exit"
++            option_type[5] = "click"
+         }
+         else
+         {
+-            options = 6
++            options = 7
+             option[0] = "audio"
+             option_text[0] = "Audio"
+             option_type[0] = "menu"
+@@ -38,9 +41,12 @@ switch argument0
+             option[4] = "credits"
+             option_text[4] = "Credits"
+             option_type[4] = "click"
+-            option[5] = "back"
+-            option_text[5] = "Back"
+-            option_type[5] = "click"
++            option[5] = "trainer"
++            option_text[5] = "Trainer"
++            option_type[5] = "menu"
++            option[6] = "back"
++            option_text[6] = "Back"
++            option_type[6] = "click"
+         }
+         break
+     case "audio":
+@@ -135,6 +141,23 @@ switch argument0
+         option_text[9] = "Back"
+         option_type[9] = "menu"
+         break
++    case "trainer":
++        options = 5
++        option[0] = "start_level"
++        option_text[0] = "Start on level: 1"
++        option_type[0] = "click"
++        option[1] = "loop_level"
++        option_text[1] = "Loop (off)"
++        option_type[1] = "click"
++        option[2] = "force_upgrade"
++        option_text[2] = "Force upgrade: OFF"
++        option_type[2] = "click"
++        option[3] = "start_with_upgrade"
++        option_text[3] = "Start with upgrade (OFF)"
++        option_type[3] = "click"
++        option[4] = "main"
++        option_text[4] = "Back"
++        option_type[4] = "menu"
+ }
+ 
+ scr_options_update()
+diff --git a/gml_Script_scr_options_update.gml b/gml_Script_scr_options_update.gml
+index b79b561..655812d 100644
+--- a/gml_Script_scr_options_update.gml
++++ b/gml_Script_scr_options_update.gml
+@@ -21,7 +21,7 @@ for (i = 0; i < options; i += 1)
+                 slider_val[i] = (global.MOUSE_SENSE_V / global.MOUSE_SENSE_MAX)
+                 break
+         }
+-        
++
+         slider_x[i] = (slider_dots_x + (slider_val[i] * slider_w))
+         for (ii = 0; ii < slider_dots; ii += 1)
+         {
+@@ -55,7 +55,72 @@ for (i = 0; i < options; i += 1)
+                 if global.ACC_MODE
+                     option_text[i] = "Accessibility mode (ON)"
+                 break
++            case "start_level":
++                option_text[i] = "Start on level: "
++                if(global.START_LEVEL == 10)
++                    option_text[i] += "Epilogue"
++                else if(global.START_LEVEL == 99)
++                    option_text[i] += "Tutorial"
++                else
++                    option_text[i] += string(global.START_LEVEL + 1)
++                break
++            case "loop_level":
++                option_text[i] = "Loop level (OFF)"
++                if (global.LOOP_LEVEL == 1)
++                    option_text[i] = "Loop level (ON)"
++                break
++            case "force_upgrade":
++                option_text[i] = "Force upgrade: "
++                switch global.FORCE_UPGRADE
++                {
++                    case -1:
++                        option_text[i] += "OFF"
++                        break
++                    case 0:
++                        option_text[i] += "Serious Mode"
++                        break
++                    case 1:
++                        option_text[i] += "Slow bullets"
++                        break
++                    case 2:
++                        option_text[i] += "SHOTGUN"
++                        break
++                    case 3:
++                        option_text[i] += "Big idol"
++                        break
++                    case 4:
++                        option_text[i] += "UZI"
++                        break
++                    case 5:
++                        option_text[i] += "RUBBER BULLETS"
++                        break
++                    case 6:
++                        option_text[i] += "BIGGER clips"
++                        break
++                    case 7:
++                        option_text[i] += "Explosive ammo"
++                        break
++                    case 8:
++                        option_text[i] += "knife"
++                        break
++                    case 9:
++                        option_text[i] += "Reload Speed"
++                        break
++                    case 10:
++                        option_text[i] += "Ghost"
++                        break
++                    case 11:
++                        option_text[i] += "Compass"
++                        break
++                }
++                break
++            case "start_with_upgrade":
++                if (global.START_WITH_UPGRADE)
++                    option_text[i] = "Start with upgrade (ON)"
++                else
++                    option_text[i] = "Start with upgrade (OFF)"
++                break
+         }
+-        
++
+     }
+ }
 diff --git a/gml_Script_scr_reset_upgrades.gml b/gml_Script_scr_reset_upgrades.gml
-index 1738f97..02d2479 100644
+index 1738f97..3e712ef 100644
 --- a/gml_Script_scr_reset_upgrades.gml
 +++ b/gml_Script_scr_reset_upgrades.gml
-@@ -1,2 +1,3 @@
--global.LAST_UPGRADE = "none"
-+global.LAST_UPGRADE = "knife"
+@@ -1,2 +1,4 @@
+ global.LAST_UPGRADE = "none"
  obj_upgrade_list.player_upgrades = 0
-+scr_upgrade_get(8)
++if(global.FORCE_UPGRADE >= 0 && global.START_WITH_UPGRADE)
++  scr_upgrade_get(global.FORCE_UPGRADE)
 \ No newline at end of file
 diff --git a/gml_Script_scr_setup_stats.gml b/gml_Script_scr_setup_stats.gml
-index 2f7ee02..b7fdcab 100644
+index 2f7ee02..0dd9075 100644
 --- a/gml_Script_scr_setup_stats.gml
 +++ b/gml_Script_scr_setup_stats.gml
-@@ -1,5 +1,5 @@
+@@ -1,5 +1,7 @@
  scr_reset_level_time()
--global.LEVEL = 0
-+global.LEVEL = 9
+ global.LEVEL = 0
++if(global.START_LEVEL > 0)
++  global.LEVEL = global.START_LEVEL
  global.CORRIDORS_ONLY = 0
  global.TIME = 0
  global.LEVEL_TIME = 0

@@ -2,7 +2,11 @@
 
 ## Features
 
-* Start and loop level 10 with the knife (knife will appear after first reset)
+* Adds a "Trainer" menu in the settings
+  * **Start on level**: Instead of starting on level 1, you can start your runs on any other level (Tutorial currently broken)
+  * **Loop level**: When finishing the current level, restart that same level again and stop the run progression (useful for ILs, practice)
+  * **Force upgrade**: Select an upgrade to always be given as a first choice at the end of every level (until picked if non-stackable)
+  * **Start with upgrade**: Start immediately with force upgrade, instead of having to pick it at the end of the level. Currently only works after the first death/suicide (useful for ILs, practice)
 * Debug mode enabled
   * Press `l` to exit toggle debug mode
   * FPS counter
