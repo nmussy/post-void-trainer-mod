@@ -403,17 +403,16 @@ index b79b561..655812d 100644
      }
  }
 diff --git a/gml_Script_scr_player_draw_gui_elements.gml b/gml_Script_scr_player_draw_gui_elements.gml
-index daa1b41..706bfc9 100644
+index daa1b41..4dae3c3 100644
 --- a/gml_Script_scr_player_draw_gui_elements.gml
 +++ b/gml_Script_scr_player_draw_gui_elements.gml
-@@ -18,6 +18,10 @@ if debug
+@@ -18,6 +18,9 @@ if debug
      draw_text(472, 76, ("Level:" + string(global.LEVEL)))
      draw_text(472, 92, ("Enemies:" + string(obj_world_builder.enemy_count)))
      draw_text(472, 108, ("Zdir:" + string(zdir)))
-+    // draw_text(472, 124, ("move_f:" + string(move_f)))
-+    // draw_text(472, 140, ("move_s:" + string(move_s)))
 +    draw_text(472, 124, ("hsp:" + string(hsp)))
 +    draw_text(472, 140, ("vsp:" + string(vsp)))
++    draw_text(472, 156, ("sp:" + string(sqrt(power(hsp, 2) + power(vsp, 2)))))
      draw_set_color(hp_bar_border_col)
      draw_rectangle((hp_bar_x - hp_bar_border_wh), (hp_bar_y - hp_bar_border_wh), ((hp_bar_x + hp_bar_w) + hp_bar_border_wh), ((hp_bar_y + hp_bar_h) + hp_bar_border_wh), 0)
      draw_set_color(hp_bar_col)
