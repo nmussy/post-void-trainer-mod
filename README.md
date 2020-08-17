@@ -1,5 +1,7 @@
 # Post Void trainer mod
 
+![preview](https://cdn.discordapp.com/attachments/741329513031663649/744673245889822820/unknown.png)
+
 ## Features
 
 * Adds a "Trainer" menu in the settings
@@ -18,12 +20,12 @@
 
 ## Installation
 
-### Requirements
+### Pre-requirements
 
 * [UndertaleModTool](https://github.com/krzys-h/UndertaleModTool/releases)
 * [git](http://git-scm.com/download/win) to apply the mod's diffs
 
-## Usage
+### Manual install
 
 * Go to `C:\Program Files (x86)\Steam\steamapps\common\Post Void\`
 * [Download the tarball of this repository](https://github.com/nmussy/post-void-trainer-mod/archive/master.zip), and export it in the Post Void folder
