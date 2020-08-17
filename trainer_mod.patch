@@ -42,7 +42,7 @@ index ef39583..7d9c2dd 100644
                  global.MOUSE_SENSE_V = max(global.MOUSE_SENSE_MIN, (slider_val[slider_holding] * global.MOUSE_SENSE_MAX))
                  break
          }
--        
+-
 +
      }
      else
@@ -155,7 +155,7 @@ index ef39583..7d9c2dd 100644
 +                option_text[option_selected] = "Start with upgrade (OFF)"
 +            break
      }
--    
+-
 +
      if (option_type[option_selected] == "menu")
      {
@@ -164,7 +164,7 @@ index ef39583..7d9c2dd 100644
                  global.KEY_SUICIDE = keyboard_lastkey
                  break
          }
--        
+-
 +
          setting_key = -1
      }
@@ -300,7 +300,7 @@ index 28a7774..287a237 100644
 +        option_text[4] = "Back"
 +        option_type[4] = "menu"
  }
- 
+
  scr_options_update()
 diff --git a/gml_Script_scr_options_update.gml b/gml_Script_scr_options_update.gml
 index b79b561..655812d 100644
@@ -310,7 +310,7 @@ index b79b561..655812d 100644
                  slider_val[i] = (global.MOUSE_SENSE_V / global.MOUSE_SENSE_MAX)
                  break
          }
--        
+-
 +
          slider_x[i] = (slider_dots_x + (slider_val[i] * slider_w))
          for (ii = 0; ii < slider_dots; ii += 1)
@@ -385,10 +385,25 @@ index b79b561..655812d 100644
 +                    option_text[i] = "Start with upgrade (OFF)"
 +                break
          }
--        
+-
 +
      }
  }
+diff --git a/gml_Script_scr_player_draw_gui_elements.gml b/gml_Script_scr_player_draw_gui_elements.gml
+index daa1b41..706bfc9 100644
+--- a/gml_Script_scr_player_draw_gui_elements.gml
++++ b/gml_Script_scr_player_draw_gui_elements.gml
+@@ -18,6 +18,10 @@ if debug
+     draw_text(472, 76, ("Level:" + string(global.LEVEL)))
+     draw_text(472, 92, ("Enemies:" + string(obj_world_builder.enemy_count)))
+     draw_text(472, 108, ("Zdir:" + string(zdir)))
++    // draw_text(472, 124, ("move_f:" + string(move_f)))
++    // draw_text(472, 140, ("move_s:" + string(move_s)))
++    draw_text(472, 124, ("hsp:" + string(hsp)))
++    draw_text(472, 140, ("vsp:" + string(vsp)))
+     draw_set_color(hp_bar_border_col)
+     draw_rectangle((hp_bar_x - hp_bar_border_wh), (hp_bar_y - hp_bar_border_wh), ((hp_bar_x + hp_bar_w) + hp_bar_border_wh), ((hp_bar_y + hp_bar_h) + hp_bar_border_wh), 0)
+     draw_set_color(hp_bar_col)
 diff --git a/gml_Script_scr_reset_upgrades.gml b/gml_Script_scr_reset_upgrades.gml
 index 1738f97..3e712ef 100644
 --- a/gml_Script_scr_reset_upgrades.gml
