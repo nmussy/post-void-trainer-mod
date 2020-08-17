@@ -42,7 +42,7 @@ index ef39583..7d9c2dd 100644
                  global.MOUSE_SENSE_V = max(global.MOUSE_SENSE_MIN, (slider_val[slider_holding] * global.MOUSE_SENSE_MAX))
                  break
          }
--
+-        
 +
      }
      else
@@ -155,7 +155,7 @@ index ef39583..7d9c2dd 100644
 +                option_text[option_selected] = "Start with upgrade (OFF)"
 +            break
      }
--
+-    
 +
      if (option_type[option_selected] == "menu")
      {
@@ -164,11 +164,24 @@ index ef39583..7d9c2dd 100644
                  global.KEY_SUICIDE = keyboard_lastkey
                  break
          }
--
+-        
 +
          setting_key = -1
      }
  }
+diff --git a/gml_Object_obj_score_screen_Create_0.gml b/gml_Object_obj_score_screen_Create_0.gml
+index ccdf30e..fd2e4e9 100644
+--- a/gml_Object_obj_score_screen_Create_0.gml
++++ b/gml_Object_obj_score_screen_Create_0.gml
+@@ -172,7 +172,7 @@ for (i = 0; i < bonuses; i += 1)
+             bonus_amount[i] = max(0, ((((global.LEVEL + 1) * 7) - global.HITS_TAKEN) * 250))
+             break
+     }
+-    
++
+     bonus_x[i] = (bonus_start_x + (bonus_x_sep * bonus_xpos))
+     bonus_y[i] = (bonus_start_y + (bonus_y_sep * bonus_row))
+     bonus_scale[i] = 8
 diff --git a/gml_Object_obj_setup_Create_0.gml b/gml_Object_obj_setup_Create_0.gml
 index 5ade9e7..bc27b86 100644
 --- a/gml_Object_obj_setup_Create_0.gml
@@ -300,7 +313,7 @@ index 28a7774..287a237 100644
 +        option_text[4] = "Back"
 +        option_type[4] = "menu"
  }
-
+ 
  scr_options_update()
 diff --git a/gml_Script_scr_options_update.gml b/gml_Script_scr_options_update.gml
 index b79b561..655812d 100644
@@ -310,7 +323,7 @@ index b79b561..655812d 100644
                  slider_val[i] = (global.MOUSE_SENSE_V / global.MOUSE_SENSE_MAX)
                  break
          }
--
+-        
 +
          slider_x[i] = (slider_dots_x + (slider_val[i] * slider_w))
          for (ii = 0; ii < slider_dots; ii += 1)
@@ -385,7 +398,7 @@ index b79b561..655812d 100644
 +                    option_text[i] = "Start with upgrade (OFF)"
 +                break
          }
--
+-        
 +
      }
  }
